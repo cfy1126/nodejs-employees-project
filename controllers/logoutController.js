@@ -19,10 +19,15 @@ const handleLogout = async (req, res) => {
   }
 
   // Delete refreshToken in db
+  /*
   await User.updateOne(
     { username: foundUser.username },
     { $set: { refreshToken: '' } }
   );
+  */
+  foundUser.refreshToken = '';
+  const result = await foundUser.save();
+  console.log(result);
 
   res.clearCookie('jwt', {
     httpOnly: true,

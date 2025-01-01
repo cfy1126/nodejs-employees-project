@@ -31,10 +31,16 @@ const handleLogin = async (req, res) => {
       { expiresIn: '1d' }
     );
     // Saving refreshToken with current user
+    /*
     await User.updateOne(
       { username: foundUser.username },
       { $set: { refreshToken: refreshToken } }
     );
+    */
+    foundUser.refreshToken = refreshToken;
+    const result = await foundUser.save();
+    console.log(result);
+    
     res.cookie('jwt', refreshToken, {
       httpOnly: true,
       sameSite: 'None',
